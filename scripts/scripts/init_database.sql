@@ -1,43 +1,30 @@
-USE master;
-GO 
+-- Create Database 'DataWarehouse'
 
-/*
+USE master; 
 
-Create Database and Schemas
-
-Script purpose:
-	This script creates a new database named 'DataWarehouse' after checking if it already exists.
-	If the database exists, it is dropped and recreated. Additionally, the script sets up three schemas withing the
-	database: 'bronze', 'silver', and 'gold'.
-
-WARNING:
-	Running this script will drop the entire 'DataWarehouse' database if it exists.
-	All data in database will be permanently deleted. Proceed with caution
-	and ensure you have proper backups before running this script.
-
-*/
-
--- Drop and recreate the 'DataWarehouse' database
-IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
-BEGIN
-	ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-	DROP DATABASE DataWarehouse;
-END;
+IF EXISTS ( SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse') -- in case Datawarehouse exists
+BEGIN 
+	ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE; -- we drop it
+	DROP DATABASE DataWarehouse; 
+END
 GO
 
--- Create the 'DataWarehouse' database
-CREATE DATABASE Datawarehouse;
+CREATE DATABASE DataWarehouse; -- then create it
+
 GO
 
 USE DataWarehouse;
+
+GO --Separates the one by one run of each line
+
+-- Creating separate folders for each medalion --
+
+CREATE SCHEMA bronze; 
+
 GO
 
--- Create Schemas
-CREATE SCHEMA Bronze;
+CREATE SCHEMA silver;
+
 GO
 
-CREATE SCHEMA Silver;
-GO
-
-CREATE SCHEMA Gold;
-GO
+CREATE SCHEMA gold;
